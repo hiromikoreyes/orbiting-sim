@@ -1,5 +1,5 @@
 class Body:
-    def __init__(self, mass: float, pos: tuple[int], vel: tuple[int], acc: tuple[int]):
+    def __init__(self, mass: float, pos: tuple[float], vel: tuple[float], acc: tuple[float]):
         self.mass = mass
         self.pos_x = pos[0]
         self.pos_y = pos[1]
