@@ -8,6 +8,14 @@ class Body:
         self.acc_x = acc[0]
         self.acc_y = acc[1]
 
+    def gravity(self, body_alt):
+        """ Calculates then adds force of gravity between two Bodies """
+        
+    
+
+
+        
+
         
 
 
