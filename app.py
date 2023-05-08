@@ -15,11 +15,14 @@ running = True
 
 #objects in simulation
 
-thingy2 = simulation.Body(100000, (1920//2,1080//2), (0,0), (0,0))
+thingy2 = simulation.Body(10000, (1920//2,1080//2), (0,0), (0,0))
 objects = [thingy2]
+# objects = []
 
-for i in range(100):
-    objects.append(simulation.Body(100, (1920//2 - random.randint(-1000,1000),1080//2 - random.randint(-1000,1000)), (0.5,-0.05), (0, 0)))
+for i in range(1):
+    # objects.append(simulation.Body(10, (1920//2 - random.randint(-1000,1000),1080//2 - random.randint(-1000,1000)), (0.5,-0.05), (0, 0)))
+    objects.append(simulation.Body(1, (1920//2 - 900 ,1080//2 + 900), (0.05,-1  ), (0, 0)))
+
 
 
 while running:
@@ -54,7 +57,7 @@ while running:
         #orbiting physics calculation
         for body_alt in objects:
             if body_alt is not body:
-                body.gravity(body_alt)
+                body.gravity(screen, body_alt)
 
 
                     
