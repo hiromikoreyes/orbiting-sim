@@ -21,19 +21,23 @@ class Body:
     def collide(self, List, body_alt):
         displ_x = body_alt.pos_x - self.pos_x
         displ_y = body_alt.pos_y - self.pos_y
-        bounds = abs(body_alt.radius - self.radius)
+        bounds = max(self.radius, body_alt.radius)
         
         if np.sqrt(displ_x ** 2 + displ_y ** 2) < bounds:
-            if self.mass > body_alt.mass:
+            if self.mass >= body_alt.mass:
                 mass_coeff = body_alt.mass/self.mass
                 self.acc_x += mass_coeff * body_alt.acc_x
                 self.acc_y += mass_coeff * body_alt.acc_y
+                self.vel_x += mass_coeff * body_alt.vel_x
+                self.vel_y += mass_coeff * body_alt.vel_y
                 self.mass += body_alt.mass
                 List.remove(body_alt)
             else:
                 mass_coeff = self.mass/body_alt.mass
                 body_alt.acc_x += mass_coeff * self.acc_x
                 body_alt.acc_y += mass_coeff * self.acc_y
+                body_alt.vel_x += mass_coeff * self.vel_x
+                body_alt.vel_y += mass_coeff * self.vel_y
                 body_alt.mass += self.mass
                 List.remove(self)
 
@@ -48,12 +52,8 @@ class Body:
         soft_cap = 10000
         
         accel = (G * body_alt.mass) / np.sqrt((displ_x ** 2 + displ_y ** 2) ** 2 + soft_cap) 
-        # print(accel)
         
-        if(displ_x == 0 and displ_y > 0):
-            theta = np.pi / 2
-        elif(displ_x == 0 and displ_y < 0):
-            theta = -np.pi / 2
+
 
         if(displ_x > 0 and displ_y < 0): #body_alt is north east to self
             theta = np.arctan(-displ_y/displ_x)
@@ -67,12 +67,20 @@ class Body:
             theta = np.pi - np.arctan(displ_y/-displ_x)
             self.acc_x += np.cos(theta) * accel
             self.acc_y += np.sin(theta) * accel
-            # if self.mass == 10: print(theta/np.pi, self.acc_x, self.acc_y)
         elif(displ_x > 0 and displ_y > 0): #body_alt is south east to self
             theta = 2 * np.pi - np.arctan(displ_y/displ_x)
             self.acc_x += np.cos(theta) * accel
             self.acc_y -= np.sin(theta) * accel
-            # if self.mass == 10: print(theta/np.pi, self.acc_x, self.acc_y)
+
+        if(displ_y == 0 and displ_x > 0):
+            self.acc_x += accel
+        elif(displ_y == 0 and displ_x < 0):
+            self.acc_x -= accel
+        elif(displ_x == 0 and displ_y > 0):
+            self.acc_y += accel 
+        elif(displ_x == 0 and displ_y < 0):
+            self.acc_y -= accel 
+
 
 
         # if(self.mass == 1):
