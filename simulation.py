@@ -1,6 +1,11 @@
 import numpy as np
 import pygame as pg 
-G = 0.00006 #making it up
+G = 0.006 #making it up
+
+class BodyList:
+    def __init__(self, objects):
+        self.objects = objects
+
 
 class Body:
     def __init__(self, mass: float, pos: tuple[float], vel: tuple[float], acc: tuple[float]):
@@ -11,9 +16,28 @@ class Body:
         self.vel_y = vel[1]
         self.acc_x = acc[0]
         self.acc_y = acc[1]
+        self.radius = np.cbrt(4 * self.mass / 3 * np.pi)  
 
-    def __collision(self, body_alt):
-        print("bodies collided!!!!")
+    def collide(self, List, body_alt):
+        displ_x = body_alt.pos_x - self.pos_x
+        displ_y = body_alt.pos_y - self.pos_y
+        bounds = abs(body_alt.radius - self.radius)
+        
+        if np.sqrt(displ_x ** 2 + displ_y ** 2) < bounds:
+            if self.mass > body_alt.mass:
+                mass_coeff = body_alt.mass/self.mass
+                self.acc_x += mass_coeff * body_alt.acc_x
+                self.acc_y += mass_coeff * body_alt.acc_y
+                self.mass += body_alt.mass
+                List.remove(body_alt)
+            else:
+                mass_coeff = self.mass/body_alt.mass
+                body_alt.acc_x += mass_coeff * self.acc_x
+                body_alt.acc_y += mass_coeff * self.acc_y
+                body_alt.mass += self.mass
+                List.remove(self)
+
+
 
 
     def gravity(self, surface, body_alt):
@@ -21,8 +45,10 @@ class Body:
         displ_x = body_alt.pos_x - self.pos_x
         displ_y = body_alt.pos_y - self.pos_y
         displ = np.sqrt(displ_x ** 2 + displ_y ** 2)
+        soft_cap = 10000
         
-        accel = (G * body_alt.mass) / (displ_x ** 2 + displ_y ** 2)
+        accel = (G * body_alt.mass) / np.sqrt((displ_x ** 2 + displ_y ** 2) ** 2 + soft_cap) 
+        # print(accel)
         
         if(displ_x == 0 and displ_y > 0):
             theta = np.pi / 2
@@ -49,17 +75,17 @@ class Body:
             # if self.mass == 10: print(theta/np.pi, self.acc_x, self.acc_y)
 
 
-        if(self.mass == 1):
-            x_prime = (self.pos_x * np.cos(theta) - self.pos_y * np.sin(theta))
-            y_prime = (self.pos_x * np.sin(theta) + self.pos_y * np.cos(theta))
+        # if(self.mass == 1):
+            # x_prime = (self.pos_x * np.cos(theta) - self.pos_y * np.sin(theta))
+            # y_prime = (self.pos_x * np.sin(theta) + self.pos_y * np.cos(theta))
             # pg.draw.line(surface, (255,0,0), (1920//2, 1080//2), (10000 * self.acc_x, 10000 * self.acc_y))
             # pg.draw.line(surface, (0,255,0), (self.pos_x, self.pos_y), (self.pos_x, body_alt.pos_y))
-            print("-------------------")
-            print(self.acc_x, self.acc_y)
-            print(self.vel_x, self.vel_y)
-            print(self.pos_x, self.pos_y)
+            # print("-------------------")
+            # print(self.acc_x, self.acc_y)
+            # print(self.vel_x, self.vel_y)
+            # print(self.pos_x, self.pos_y)
 
-            pg.draw.line(surface, (0,255,0), (body_alt.pos_x, body_alt.pos_y), (self.pos_x, self.pos_y))
+            # pg.draw.line(surface, (0,255,0), (body_alt.pos_x, body_alt.pos_y), (self.pos_x, self.pos_y))
             
 
         

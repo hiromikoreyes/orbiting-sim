@@ -15,13 +15,12 @@ running = True
 
 #objects in simulation
 
-thingy2 = simulation.Body(10000, (1920//2,1080//2), (0,0), (0,0))
-objects = [thingy2]
-# objects = []
+thingy2 = simulation.Body(100, (1920//2,1080//2), (0,0), (0,0))
+List = simulation.BodyList([thingy2])
 
-for i in range(1):
-    # objects.append(simulation.Body(10, (1920//2 - random.randint(-1000,1000),1080//2 - random.randint(-1000,1000)), (0.5,-0.05), (0, 0)))
-    objects.append(simulation.Body(1, (1920//2 - 900 ,1080//2 + 900), (0.05,-1  ), (0, 0)))
+for i in range(100):
+    List.objects.append(simulation.Body(random.randint(1,10), (1920//2 + random.randint(-200,200),1080//2 + random.randint(-200,200)), (0,0), (0, 0)))
+    # objects.append(simulation.Body(1, (1920//2 - 200 ,1080//2 + 200), (0.5, 0.5), (0, 0)))
 
 
 
@@ -36,9 +35,10 @@ while running:
     
 
     #rendering stuff
-    for body in objects:
-        radius = np.cbrt(4 * body.mass / 3 * np.pi) 
-        pygame.draw.circle(screen, (255 - 4 * (np.log2(body.mass)), 255 - 4 * np.log2(body.mass) ,255), (body.pos_x, body.pos_y), radius)
+    for body in List.objects:
+        print(len(List.objects))
+        
+        pygame.draw.circle(screen, (255 - 4 * (np.log2(body.mass)), 255 - 4 * np.log2(body.mass) ,255), (body.pos_x, body.pos_y), body.radius)
         
         #Update position each frame
 
@@ -55,8 +55,9 @@ while running:
 
 
         #orbiting physics calculation
-        for body_alt in objects:
+        for body_alt in List.objects:
             if body_alt is not body:
+                body.collide(List.objects, body_alt)
                 body.gravity(screen, body_alt)
 
 
