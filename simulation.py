@@ -1,6 +1,6 @@
 import numpy as np
 import pygame as pg 
-G = 0.06 #making it up
+G = 0.6 #making it up
 
 
 

@@ -63,6 +63,9 @@ while running:
 
 
         #orbiting physics calculation
+        body.acc_x = 0
+        body.acc_y = 0
+
         for body_alt in List.objects:
             if body_alt is not body:
                 body.collide(List.objects, body_alt)
