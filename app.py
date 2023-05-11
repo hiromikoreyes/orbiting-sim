@@ -20,8 +20,8 @@ thingy1 = simulation.Body(5000, (1920//2 + 200, 1080//2 + 200), (0,0), (0,0))
 thingy2 = simulation.Body(5000, (1920//2,1080//2), (0,0), (0,0))
 List = simulation.BodyList([thingy2])
 
-for i in range(100):
-    List.objects.append(simulation.Body(random.randint(1,10), (1920//2 + random.randint(-200,200),1080//2 + random.randint(-200,200)), (5,0), (0, 0)))
+# for i in range(100):
+    # List.objects.append(simulation.Body(random.randint(1,10), (1920//2 + random.randint(-200,200),1080//2 + random.randint(-200,200)), (random.randint(-5,5),random.randint(-5,5)), (0, 0)))
     # objects.append(simulation.Body(1, (1920//2 - 200 ,1080//2 + 200), (0.5, 0.5), (0, 0)))
 
 
@@ -34,7 +34,7 @@ while running:
         
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()
-            List.objects.append(simulation.Body(1, (pos[0],pos[1]), (1, 0),(0,0)))
+            List.objects.append(simulation.Body(5000, (pos[0],pos[1]), (5, 0),(0,0)))
             
 
     #logical stuff
