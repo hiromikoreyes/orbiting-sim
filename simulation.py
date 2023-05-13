@@ -8,6 +8,18 @@ class BodyList:
     def __init__(self, objects):
         self.objects = objects
 
+    def updateGlobal(self, delta_pos, delta_vel, delta_acc):
+        delta_pos = np.array(delta_pos)
+        delta_vel = np.array(delta_vel)
+        delta_acc = np.array(delta_acc)
+
+        for body in self.objects:
+            for coordinate in body.prev_pos:
+                coordinate += tuple(delta_pos)
+            body.pos += delta_pos
+            body.vel += delta_vel
+            body.acc += delta_acc
+
     def removedFlagged(self):
         for body in self.objects:
             if body.deletion_flag:

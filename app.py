@@ -36,6 +36,20 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()
             List.objects.append(simulation.Body(10, (pos[0],pos[1]), (-5, 0),(0,0)))
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_a]:
+            List.updateGlobal((-2, 0), (0,0), (0,0))
+        if keys[pygame.K_w]:
+            List.updateGlobal((0, -2), (0,0), (0,0))
+        if keys[pygame.K_d]:
+            List.updateGlobal((2, 0), (0,0), (0,0))
+        if keys[pygame.K_s]:
+            List.updateGlobal((0, 2), (0,0), (0,0))
+
+
+                
+
             
     #Count Frames
     frame_count += 1
