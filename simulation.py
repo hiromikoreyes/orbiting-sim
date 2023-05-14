@@ -14,8 +14,8 @@ class BodyList:
         delta_acc = np.array(delta_acc)
 
         for body in self.objects:
-            for coordinate in body.prev_pos:
-                coordinate += tuple(delta_pos)
+            for i in range(len(body.prev_pos)):
+                body.prev_pos[i] += delta_pos
             body.pos += delta_pos
             body.vel += delta_vel
             body.acc += delta_acc
@@ -75,7 +75,7 @@ class Body:
     def renderTrail(self, display):
         if len(self.prev_pos) > 1: pg.draw.line(display, (255,0,255), self.pos, self.prev_pos[len(self.prev_pos)-1])
         for i in range(1, len(self.prev_pos)-1):
-            pg.draw.line(display, (255,0,255), self.prev_pos[i], self.prev_pos[i+1])
+            pg.draw.line(display, (255,255,255), self.prev_pos[i], self.prev_pos[i+1])
 
             
     
