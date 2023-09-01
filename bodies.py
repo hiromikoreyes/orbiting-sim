@@ -1,6 +1,6 @@
 import numpy as np
 import pygame as pg 
-G = 6 #making it up
+G = 6 
 
 
 
@@ -37,6 +37,7 @@ class Body:
         self.deletion_flag = False
 
     def collide(self, body_alt):
+        
         displ = body_alt.pos - self.pos
         max_radius = max(self.radius, body_alt.radius)
         if np.linalg.norm(displ) < max_radius:
@@ -77,6 +78,5 @@ class Body:
         for i in range(1, len(self.prev_pos)-1):
             pg.draw.line(display, (255,255,255), self.prev_pos[i], self.prev_pos[i+1])
 
-            
     
 
