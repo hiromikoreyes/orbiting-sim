@@ -3,7 +3,7 @@ uses basic physics to simulate things orbiting each other :) !
 
 - knowledge used:
   - Gravitational Formula (basic physics)
-  - Barnes Hut Algorithm
+  - Barnes Hut Algorithm (to be done)
   - Python
 
 - currently uses naive approach :( (Sept 1)
