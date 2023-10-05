@@ -6,7 +6,7 @@ uses basic physics to simulate things orbiting each other :) !
   - Barnes Hut Algorithm (to be done)
   - Python
 
-- currently uses naive approach :( (Sept 1)
+- currently uses naive approach :( (Oct 5 2023)
 
 # RESOURCES #
 http://arborjs.org/docs/barnes-hut
